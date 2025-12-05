@@ -66,8 +66,8 @@ in
           enable = mkDefault true;
           enableOffloadCmd = mkDefault true;
         };
-        intelBusId = "PCI:00:02.0";
-        nvidiaBusId = "PCI:01:00.0";
+        intelBusId = "PCI:0:2.0";
+        nvidiaBusId = "PCI:1:0.0";
       };
 
       powerManagement = {
