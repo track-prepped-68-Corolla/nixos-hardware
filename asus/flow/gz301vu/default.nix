@@ -28,9 +28,31 @@ in
     ../../../common/pc/ssd
   ];
 
-  boot = {
-    blacklistedKernelModules = [ "nouveau" ];
-  };
+  config = mkMerge [
+    {
+      # Configure basic system settings:
+      boot = {
+        blacklistedKernelModules = [ "nouveau" ];
+        kernelModules = [ "kvm-intel" ];
+        kernelParams = [
+          "mem_sleep_default=deep"
+          "pcie_aspm.policy=powersupersave"
+        ];
+      };
+
+      services = {
+        asusd = {
+          enable = mkDefault true;
+          enableUserService = mkDefault true;
+        };
+
+        supergfxd.enable = mkDefault true;
+
+
+      };
+
+      #flow devices are 2 in 1 laptops
+      hardware.sensor.iio.enable = mkDefault true;
 
   hardware = {
 
@@ -57,31 +79,6 @@ in
 
     };
   };
-
-  config = mkMerge [
-    {
-      # Configure basic system settings:
-      boot = {
-        kernelModules = [ "kvm-intel" ];
-        kernelParams = [
-          "mem_sleep_default=deep"
-          "pcie_aspm.policy=powersupersave"
-        ];
-      };
-
-      services = {
-        asusd = {
-          enable = mkDefault true;
-          enableUserService = mkDefault true;
-        };
-
-        supergfxd.enable = mkDefault true;
-
-
-      };
-
-      #flow devices are 2 in 1 laptops
-      hardware.sensor.iio.enable = mkDefault true;
 
     }
   ];
